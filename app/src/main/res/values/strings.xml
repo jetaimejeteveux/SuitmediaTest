@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SuitmediaTest</string>
+    <string name="event">EVENT</string>
+    <string name="guest">GUEST</string>
+</resources>
