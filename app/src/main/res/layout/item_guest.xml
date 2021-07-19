@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="110dp"
     android:layout_height="wrap_content"
-    android:background="@color/purple_200"
+    android:background="@drawable/bg_list"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView

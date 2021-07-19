@@ -37,12 +37,12 @@ class GuestAdapter(private val context: Context)
 
 
                 holder.itemView.setOnClickListener {
-                    val guestIntent = Intent(it.context, EventGuestActivity::class.java).putExtra("nameGuest", name).putExtra("birthdate", birthdate)
+                    val guestIntent = Intent(it.context, EventGuestActivity::class.java).putExtra("nameGuest", name).putExtra("activity", "guest")
                     it.context.startActivity(guestIntent)
                     val tanggalString = birthdate.split("-")
-                    val tanggalAngka : Int = tanggalString[2].toString().toInt()
-                    when {
-                        (tanggalAngka % 3 == 0) && (tanggalAngka % 2 == 0) -> text = "iOS"
+                    val tanggalAngka : Int = tanggalString[2].toInt()
+                    text = when {
+                        (tanggalAngka % 3 == 0) && (tanggalAngka % 2 == 0) -> "iOS"
                         tanggalAngka % 2 == 0 -> "Blackberry"
                         tanggalAngka % 3 == 0 -> "Android"
                         else -> "Phone"

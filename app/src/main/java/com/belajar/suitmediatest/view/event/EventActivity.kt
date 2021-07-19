@@ -1,26 +1,54 @@
 package com.belajar.suitmediatest.view.event
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import com.belajar.suitmediatest.R
 import com.belajar.suitmediatest.databinding.ActivityEventBinding
-import com.belajar.suitmediatest.view.adapter.EventAdapter
+
 
 class EventActivity : AppCompatActivity() {
     private lateinit var eventBinding: ActivityEventBinding
-    private lateinit var eventViewModel: EventViewModel
+    val fragmentEvent = EventFragment()
+    val fragmentMap = MapsFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         eventBinding = ActivityEventBinding.inflate(layoutInflater)
         setContentView(eventBinding.root)
-        eventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
-        val  event = eventViewModel.getEvent()
-        val adapter = EventAdapter(event)
-        eventBinding.rvEvent.layoutManager = LinearLayoutManager(this)
-        eventBinding.rvEvent.adapter = adapter
-        adapter.notifyDataSetChanged()
 
+        setFragment(fragmentEvent)
+        setSupportActionBar(eventBinding.toolbarEvent)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
     }
+
+    private fun setFragment(fragment : Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.layout_frame, fragment)
+        fragmentTransaction.commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.event_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_map -> {
+                setFragment(fragmentMap)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
+
 }

@@ -1,19 +1,28 @@
 package com.belajar.suitmediatest.view.guest
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
+import com.belajar.suitmediatest.data.local.GuestEntity
 import com.belajar.suitmediatest.data.remote.ModelGuest
 import com.belajar.suitmediatest.data.repository.GuestRepository
+import kotlinx.coroutines.launch
 
 
-class GuestViewModel : ViewModel() {
-    private val repository = GuestRepository()
+class GuestViewModel(private val repository: GuestRepository) : ViewModel() {
+
     fun getGuests() : LiveData<List<ModelGuest>> {
         return repository.getGuests()
     }
+    fun insert(guest: GuestEntity) = viewModelScope.launch{
+        repository.insert(guest)
+    }
+    fun update(guest: GuestEntity) = viewModelScope.launch {
+        repository.insert(guest)
+    }
+    fun delete(guest: GuestEntity) = viewModelScope.launch {
+        repository.insert(guest)
+    }
+
 
 
 

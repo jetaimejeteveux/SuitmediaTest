@@ -32,15 +32,36 @@ class EventAdapter(private val eventList: List<ModelEvent>)
                     .into(binding.ivEvent)
 
                 holder.itemView.setOnClickListener {
-                    val eventIntent = Intent(it.context, EventGuestActivity::class.java).putExtra("nameEvent", name).putExtra("date", date)
+                    val eventIntent = Intent(it.context, EventGuestActivity::class.java).putExtra("nameEvent", name).putExtra("activity", "event")
                    it.context.startActivity(eventIntent)
-
+                    val bulanString = date.split("-")
+                    val bulanInt : Int = bulanString[1].toInt()
+                    val text = checkPrime(bulanInt)
+                    Toast.makeText(it.context, text, Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
     inner class EventViewHolder(val binding: ItemEventBinding)
-        :RecyclerView.ViewHolder(binding.root)
+        :RecyclerView.ViewHolder(binding.root){
+            fun checkPrime(date : Int): String{
+                var bool = false
+                val text: String
+                for (i in 2..date / 2) {
+                    // condition for nonprime number
+                    if (date % i == 0) {
+                        bool = true
+                        break
+                    }
+                }
+                if (!bool)
+                    text = "$date is a prime number"
+                else
+                    text = "$date is not a prime number"
+                return text
+            }
+        }
+
 
 }

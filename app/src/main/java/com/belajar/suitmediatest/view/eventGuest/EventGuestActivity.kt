@@ -21,21 +21,16 @@ class EventGuestActivity: AppCompatActivity()  {
 
         eventGuestViewModel = ViewModelProvider(this).get(EventGuesViewModel::class.java)
         binding.eventGuestViewModel = eventGuestViewModel
-        val nameTextNew = intent.getStringExtra("name").toString()
-        val eventButtonNew = intent.getStringExtra("nameEvent").toString()
-        val guestButtonNew = intent.getStringExtra("nameGuest").toString()
-        val birthdateGuest = intent.getStringExtra("birthdate").toString()
-        //val sourceActivity = ActivityCompat.getReferrer(this)
-        val dateEvent = intent.getStringExtra("date").toString()
-        birthdateGuest.split("-")
-        val tanggal = birthdateGuest[2]
-
-
-
-        eventGuestViewModel.changeNameText(nameTextNew)
-        eventGuestViewModel.changeValueGuestButton(guestButtonNew)
-        eventGuestViewModel.changeValueEventButton(eventButtonNew)
-
+        val asalActivity = intent.getStringExtra("activity").toString()
+        if(asalActivity == "home"){
+            val nameTextNew = intent.getStringExtra("name").toString()
+            eventGuestViewModel.changeNameText(nameTextNew)
+        } else {
+            val eventButtonNew = intent.getStringExtra("nameEvent").toString()
+            val guestButtonNew = intent.getStringExtra("nameGuest").toString()
+            eventGuestViewModel.changeValueGuestButton(guestButtonNew)
+            eventGuestViewModel.changeValueEventButton(eventButtonNew)
+        }
         binding.lifecycleOwner = this
 
         binding.btnGuest.setOnClickListener {

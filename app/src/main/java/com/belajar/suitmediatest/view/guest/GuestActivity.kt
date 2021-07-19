@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.belajar.suitmediatest.data.local.GuestDatabase
+import com.belajar.suitmediatest.data.repository.GuestRepository
 import com.belajar.suitmediatest.databinding.ActivityGuestBinding
 import com.belajar.suitmediatest.view.adapter.GuestAdapter
 
@@ -19,7 +21,10 @@ class GuestActivity : AppCompatActivity() {
         val adapter = GuestAdapter(this)
         binding.rvGuest.setHasFixedSize(true)
         binding.rvGuest.layoutManager = GridLayoutManager(applicationContext, 2)
-        guestViewModel = ViewModelProvider(this).get(GuestViewModel::class.java)
+        val dao = GuestDatabase.getInstance(application).guestDAO
+        val repository = GuestRepository(dao)
+        val factory = GuestViewModelFactory(repository)
+        guestViewModel = ViewModelProvider(this, factory).get(GuestViewModel::class.java)
         binding.rvGuest.adapter = adapter
         adapter.notifyDataSetChanged()
         guestViewModel.getGuests().observe(this, Observer {
